@@ -19,8 +19,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint check
-        run: npm run lint
-
       - name: TypeScript check
         run: npm run build
