@@ -18,10 +18,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd front
+          cd frontend
           npm install
 
       - name: TypeScript check
         run: |
-          cd front
+          cd frontend
           npm run build
