@@ -1,27 +1,52 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  frontend-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
           cache: 'npm'
 
       - name: Install dependencies
         run: |
           cd frontend
-          npm install
+          npm ci
 
-      - name: TypeScript check
+      - name: Build project
         run: |
           cd frontend
           npm run build
+
+      - name: Deploy to Vercel
+        run: |
+          cd frontend
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
+
+  backend-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Railway CLI
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          export PATH="$HOME/.railway/bin:$PATH"
+
+      - name: Deploy Backend to Railway
+        run: |
+          cd backend
+          railway up --service backend --token ${{ secrets.RAILWAY_TOKEN }}
