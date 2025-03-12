@@ -17,11 +17,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
 
       - name: Install dependencies
         run: |
           cd frontend
-          npm install
+          npm ci
 
       - name: Build project
         run: |
@@ -31,5 +32,4 @@ jobs:
       - name: Deploy to Vercel
         run: |
           cd frontend
-          npm install -g vercel
-          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
