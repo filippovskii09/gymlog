@@ -1,0 +1,35 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build project
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Deploy to Vercel
+        run: |
+          cd frontend
+          npm install -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
