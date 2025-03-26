@@ -1,8 +1,6 @@
 import bcrypt from "bcryptjs";
 
 export class AuthService {
-	userRepository;
-
 	
 	constructor(userRepository) {
 		this.userRepository = userRepository;

@@ -10,7 +10,7 @@ export class PasswordResetController {
 			const { email } = req.body;
 			await this.passwordResetService.sendResetCode(email);
 
-			res.json({ message: `Код надіслано на ${email} !` });
+			res.json({ message: `Код надіслано на ${email}` });
 		} catch(error) {
 			res.status(400).json({ message: error })
 		}
