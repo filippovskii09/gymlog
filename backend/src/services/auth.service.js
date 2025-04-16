@@ -10,7 +10,7 @@ export class AuthService {
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) throw new Error('Invalid email!');
 
-    const hashedPassword = await bcrypt.hash(password, config.SALT_ROUNDS);
+    const hashedPassword = await bcrypt.hash(password, Number(config.SALT_ROUNDS));
 
     return this.userRepository.create({
       email,

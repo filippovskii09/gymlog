@@ -53,10 +53,9 @@ export class PasswordResetService {
   async resetPassword(resetToken, newPassword) {
     try {
       const decoded = jwt.verify(resetToken, config.RESET_TOKEN_SECRET);
-      console.dir('decoded =>', decoded);
       const userId = decoded.userId;
 
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const hashedPassword = await bcrypt.hash(newPassword, Number(config.SALT_ROUNDS));
       await this.userRepository.updatePassword(userId, hashedPassword);
     } catch (error) {
       console.error('Токен не дійсний або просрочений!', error);
