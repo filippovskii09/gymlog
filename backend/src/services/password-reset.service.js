@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config.js';
@@ -59,8 +59,10 @@ export class PasswordResetService {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await this.userRepository.updatePassword(userId, hashedPassword);
     } catch (error) {
-      console.error('Токен нее дійсний або просрочений!', error);
-      throw new Error('Link for resetting password is invalid or expired! Please, try again!');
+      console.error('Токен не дійсний або просрочений!', error);
+      throw new Error(
+        'Link for resetting password is invalid or expired! Try to reset password one more!'
+      );
     }
   }
 }

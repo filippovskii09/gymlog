@@ -1,5 +1,9 @@
 import { api } from '@/features/api/api';
-import { persistedAuthInfo, persistedUserReducer } from '@/features/persist';
+import {
+  persistedAuthInfo,
+  persistedFallbackTimer,
+  persistedUserReducer,
+} from '@/features/persist';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -9,6 +13,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     auth: persistedAuthInfo,
     user: persistedUserReducer,
+    fallbackTimer: persistedFallbackTimer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

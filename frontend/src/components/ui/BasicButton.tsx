@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { cn } from '../../utils/cn.util';
 
 type Props = {
@@ -19,7 +19,7 @@ const BasicButton: FC<Props> = ({
 }) => {
   return redirectPath ? (
     <Link
-      to={redirectPath}
+      href={redirectPath}
       className={cn(
         'bg-grey group relative mx-auto flex h-11 w-full min-w-48 max-w-[300px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full border border-white p-2.5 text-center text-lg font-bold transition-all duration-200 hover:opacity-100 lg:opacity-70',
         disabled && 'pointer-events-none opacity-50',

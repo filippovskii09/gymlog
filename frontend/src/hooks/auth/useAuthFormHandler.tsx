@@ -1,11 +1,9 @@
-import { RootState } from '@/store/store';
-import { getResetToken } from '@/utils/getResetToken';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Resolver, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { ObjectSchema } from 'yup';
 import useButtonText from '../useButtonText';
 import useAuthDispatch from './useAuthDispatch';
@@ -39,8 +37,6 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
   const router = useRouter();
   const { setLoginUser, setForgotPasswordUserEmail } = useAuthDispatch();
 
-  const email = useSelector<RootState>((state) => state.auth.email);
-
   const buttonText = useButtonText({
     isLoading,
     isSuccess,
@@ -52,6 +48,7 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
   } = useForm<TFormData>({
     resolver: yupResolver(schema) as unknown as Resolver<TFormData>,
     mode: 'onBlur',
@@ -59,13 +56,7 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
 
   const onSubmit = async (formData: TFormData) => {
     try {
-      if (isNewPassword) {
-        const resetToken = getResetToken();
-        if (!resetToken) {
-          throw new Error('Error token is missing!');
-        }
-      }
-      const response = await mutate(isVerifyCode ? { ...formData, email } : formData);
+      const response = await mutate(formData);
 
       if (isLogin) {
         setLoginUser({ user: response });
@@ -85,7 +76,10 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
     } catch (err) {
       console.log('submit error catiching', err);
 
-      const errorMessage = (err as any)?.data?.message || 'An unknown error occurred';
+      const errorMessage =
+        ((err as FetchBaseQueryError)?.data as { message?: string })?.message ||
+        (err as SerializedError)?.message ||
+        'An unknown error occurred';
       setSubmitError(errorMessage);
     }
   };
@@ -98,13 +92,13 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
         }
       }
     }
-  }, [isSuccess]);
+  }, [isSuccess, onSuccessNavigate, isVerifyCode]);
 
   let mutationError: string | null = null;
 
   if (error && 'status' in error) {
-    // @ts-ignore
-    mutationError = (error as FetchBaseQueryError).data?.message || 'Server error';
+    mutationError =
+      ((error as FetchBaseQueryError).data as { message?: string })?.message || 'Server error';
   } else if (error instanceof Error) {
     mutationError = error.message;
   }
@@ -117,5 +111,6 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
     buttonText,
     submitError,
     mutationError,
+    setValue,
   };
 };

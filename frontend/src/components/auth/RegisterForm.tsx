@@ -10,11 +10,12 @@ import BasicButton from '../ui/BasicButton';
 import BasicInput from '../ui/BasicInput';
 
 const RegisterForm: FC = () => {
+  const [trigger, { isLoading, isSuccess, isError, error }] = useUserRegisterMutation();
+
   const { register, handleSubmit, errors, isSubmitting, buttonText, mutationError } =
     useAuthFormHandler<RegisterDto, GenericMessageResponse>({
       schema: registerSchema,
       mutation: () => {
-        const [trigger, { isLoading, isSuccess, isError, error }] = useUserRegisterMutation();
         return [
           async (data: RegisterDto) => {
             const result = await trigger(data).unwrap();

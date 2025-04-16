@@ -16,7 +16,7 @@ const RegisterPage = () => {
         </>
       }
     >
-      <p className="px-4 py-8 text-center text-xl font-bold">Let's Start!</p>
+      <p className="px-4 py-8 text-center text-xl font-bold">Let&apos;s Start!</p>
       <RegisterForm />
     </AuthLayout>
   );

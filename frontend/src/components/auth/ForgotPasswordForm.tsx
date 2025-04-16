@@ -11,11 +11,12 @@ import BasicButton from '../ui/BasicButton';
 import BasicInput from '../ui/BasicInput';
 
 const ForgotPasswordForm: FC = () => {
+  const [trigger, { isLoading, isSuccess, isError, error }] = useUserForgotPasswordMutation();
+
   const { register, handleSubmit, errors, isSubmitting, buttonText, submitError } =
     useAuthFormHandler<ForgotPasswordDto, GenericMessageResponse>({
       schema: forgotPasswordSchema,
       mutation: () => {
-        const [trigger, { isLoading, isSuccess, isError, error }] = useUserForgotPasswordMutation();
         return [
           async (data: ForgotPasswordDto) => {
             const result = await trigger(data).unwrap();

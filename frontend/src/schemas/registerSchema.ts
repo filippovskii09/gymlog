@@ -1,3 +1,4 @@
+import { VerifyCodeFormValues } from '@/types/password-reset.interface';
 import * as yup from 'yup';
 
 export const registerSchema = yup.object().shape({
@@ -44,24 +45,16 @@ export const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email('Please enter a valid email').required('Email is required'),
 });
 
-export const verifyCodeSchema = yup.object({
+export const verifyCodeSchema: yup.ObjectSchema<VerifyCodeFormValues> = yup.object({
   code: yup.string().length(6, 'Code must be 6 characters').required('Code is required'),
-  email: yup.string().email().required('Email is required'),
 });
 
 export const userNewPasswordSchema = yup.object({
-  resetToken: yup.string().required('Reset token is required'),
-
   newPassword: yup
     .string()
-    .min(8, 'Password must be at least 8 characters long')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/\d/, 'Password must contain at least one number')
-    .matches(
-      /[@$!%*?&]/,
-      'Password must contain at least one special character (@, $, !, %, *, ?, &)'
-    )
-    .required('Password is required'),
+    .min(8, 'Password must be at least 8 characters')
+    .required('New password is required'),
+  resetToken: yup.string().optional(),
 });
 
 export const resetPasswordSchema = yup.object().shape({

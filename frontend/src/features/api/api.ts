@@ -20,7 +20,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (
   args: string | FetchArgs,
   argApi: BaseQueryApi,
-  extraOptions: {}
+  extraOptions: object
 ) => {
   let result = await baseQuery(args, argApi, extraOptions);
 

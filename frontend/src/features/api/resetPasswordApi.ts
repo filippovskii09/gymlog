@@ -26,7 +26,7 @@ const resetPasswordApi = api.injectEndpoints({
     }),
     userNewPassword: builder.mutation<GenericMessageResponse, NewPasswordDto>({
       query: (body) => ({
-        url: RESET_PASSWORD_URLS.SET_NEW_PASSWORD,
+        url: RESET_PASSWORD_URLS.RESET_PASSWORD,
         method: 'PATCH',
         body,
       }),

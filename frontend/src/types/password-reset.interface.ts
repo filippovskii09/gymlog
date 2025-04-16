@@ -15,3 +15,7 @@ export interface NewPasswordDto extends Record<string, unknown> {
 export interface VerifyCodeResponse {
   resetToken: string;
 }
+
+export interface VerifyCodeFormValues extends Record<string, unknown> {
+  code: string;
+}

@@ -5,17 +5,18 @@ import { useUserLoginMutation } from '@/features/api/authApi';
 import { useAuthFormHandler } from '@/hooks/auth/useAuthFormHandler';
 import { LoginDto, LoginResponse } from '@/types/auth.intarface';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, FormEvent } from 'react';
 import { loginSchema } from '../../schemas/registerSchema';
 import BasicButton from '../ui/BasicButton';
 import BasicInput from '../ui/BasicInput';
 
 const LoginForm: FC = () => {
+  const [trigger, { isLoading, isSuccess, isError, error }] = useUserLoginMutation();
+
   const { register, handleSubmit, errors, isSubmitting, buttonText, mutationError } =
     useAuthFormHandler<LoginDto, LoginResponse>({
       schema: loginSchema,
       mutation: () => {
-        const [trigger, { isLoading, isSuccess, isError, error }] = useUserLoginMutation();
         return [
           async (data: LoginDto) => {
             const result = await trigger(data).unwrap();
@@ -30,7 +31,7 @@ const LoginForm: FC = () => {
     });
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="w-full">
+    <form onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)} className="w-full">
       <div className={'mb-10 flex flex-col gap-5 bg-[#B3A0FF] px-10 py-8'}>
         <BasicInput
           label="Email"

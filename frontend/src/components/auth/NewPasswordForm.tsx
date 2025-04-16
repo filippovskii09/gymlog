@@ -1,31 +1,37 @@
 'use client';
 
-import { BUTTON_TEXTS } from '@/constants/constants';
-
+import { BUTTON_TEXTS, ROUTES } from '@/constants/constants';
 import { useUserNewPasswordMutation } from '@/features/api/resetPasswordApi';
 import { useAuthFormHandler } from '@/hooks/auth/useAuthFormHandler';
 import { userNewPasswordSchema } from '@/schemas/registerSchema';
 import { GenericMessageResponse } from '@/types/auth.intarface';
 import { NewPasswordDto } from '@/types/password-reset.interface';
+import { getResetToken } from '@/utils/getResetToken';
 import { FC, FormEvent } from 'react';
 import BasicButton from '../ui/BasicButton';
 import BasicInput from '../ui/BasicInput';
 
 const NewPasswordForm: FC = () => {
+  const [trigger, { isLoading, isSuccess, isError, error }] = useUserNewPasswordMutation();
+
+  const resetToken = getResetToken();
+  if (!resetToken) return null;
+
   const { register, handleSubmit, errors, isSubmitting, buttonText, submitError } =
     useAuthFormHandler<NewPasswordDto, GenericMessageResponse>({
       schema: userNewPasswordSchema,
       mutation: () => {
-        const [trigger, { isLoading, isSuccess, isError, error }] = useUserNewPasswordMutation();
         return [
           async (data: NewPasswordDto) => {
-            const result = await trigger(data).unwrap();
+            const result = await trigger({ ...data, resetToken }).unwrap();
             return result;
           },
           { isLoading, isSuccess, isError, error },
         ] as const;
       },
       defaultButtonText: BUTTON_TEXTS.AUTH.RESET_PASSWORD,
+      onSuccessNavigate: ROUTES.AUTH.LOGIN,
+      isNewPassword: true,
     });
 
   return (
@@ -40,7 +46,14 @@ const NewPasswordForm: FC = () => {
         />
       </div>
 
-      <BasicButton buttonText={buttonText} type="submit" disabled={isSubmitting} />
+      {submitError ? (
+        <BasicButton
+          redirectPath={ROUTES.AUTH.FORGOT_PASSWORD}
+          buttonText={'Відновити пароль ще раз!'}
+        />
+      ) : (
+        <BasicButton buttonText={buttonText} type="submit" disabled={isSubmitting} />
+      )}
     </form>
   );
 };
