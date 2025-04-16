@@ -36,19 +36,19 @@ jobs:
           npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
 
   backend-deploy:
-      runs-on: ubuntu-latest
-    
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-    
-        - name: Install Railway CLI
-          run: |
-            curl -fsSL https://railway.app/install.sh | sh
-            export PATH="$HOME/.railway/bin:$PATH"
-    
-        - name: Deploy Backend to Railway
-          run: |
-            cd backend
-            export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
-            railway up --service backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Railway CLI
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          export PATH="$HOME/.railway/bin:$PATH"
+
+      - name: Deploy Backend to Railway
+        run: |
+          cd backend
+          export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
+          railway up --service backend

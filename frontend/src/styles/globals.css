@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+html,
+body {
+  width: 100%;
+  height: 100vh;
+  background: #232323;
+  color: #ffffff;
+}
+
+/* Класи для текстових кольорів */
+.text-acid {
+  color: #e2f163;
+}
+.text-light-purple {
+  color: #b3a0ff;
+}
+.text-dark-purple {
+  color: #896cfe;
+}
+.text-main-black {
+  color: #232323;
+}
+.text-grey {
+  color: #373737;
+}
+
+/* Класи для фонових кольорів */
+.bg-acid {
+  background-color: #e2f163;
+}
+.bg-light-purple {
+  background-color: #b3a0ff;
+}
+.bg-dark-purple {
+  background-color: #896cfe;
+}
+.bg-main-black {
+  background-color: #232323;
+}
+.bg-grey {
+  background-color: #373737;
+}
+
+button {
+  @apply cursor-pointer disabled:cursor-not-allowed;
+}
+
+* {
+  transition: all 0.3s ease 0s;
+}

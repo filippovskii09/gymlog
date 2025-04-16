@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests yet\" && exit 0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier --write .",
+    "lint": "eslint --fix"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx}": [

@@ -1,20 +1,37 @@
-import cors from "cors";
-import express from "express";
-import helmet from "helmet";
-import { connectDB } from "./config/db.js";
-import { config } from "./config/index.js";
-import routes from "./routes/index.js";
-
+import cors from 'cors';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import { config } from './config/config.js';
+import { connectDB } from './config/db.js';
+import { CORS_WHITE_LIST } from './constants/constants.js';
+import routes from './routes/index.js';
+import { setupSwagger } from './swagger/swagger.js';
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: CORS_WHITE_LIST,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+
 app.use(helmet());
 
-app.use("/api", routes);
+setupSwagger(app);
 
-app.get("/", (_, res) => {
-  res.json({ message: "Backend is running!" });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests, please try again later.',
+});
+
+app.use('/api', limiter, routes);
+
+app.get('/', (_, res) => {
+  res.json({ message: 'Backend is running!' });
 });
 
 app.listen(config.PORT, () => {

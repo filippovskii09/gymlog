@@ -1,40 +1,50 @@
-import { User } from "../models/User.model.js";
+import { User } from '../models/User.model.js';
 
 export class UserRepository {
-	async findByEmail(email) {
-		return User.findOne({ email });
-	}
+  async findByEmail(email) {
+    return User.findOne({ email });
+  }
 
-	async create(userData) {
-		return User.create(userData);
-	}
+  async findById(userId) {
+    return User.findById(userId);
+  }
 
-	async updateRefreshToken(userId, refreshToken) {
-		await User.findByIdAndUpdate(userId, { refreshToken });
-	}
+  async create(userData) {
+    return User.create(userData);
+  }
 
-	async saveResetCode(userId, code, expiresAt) {
-		await User.findByIdAndUpdate(userId, { resetCode: code, resetCodeExpiresAt: expiresAt }, { new: true });
-	}
+  async updateRefreshToken(userId, refreshToken) {
+    await User.findByIdAndUpdate(userId, { refreshToken });
+  }
 
-	async getResetCode(userId) {
-		const user = await User.findById(userId).select("resetCode resetCodeExpiresAt");
-		if (user && user.resetCode && user.resetCodeExpiresAt) {
-			const expiresAt = new Date(user.resetCodeExpiresAt);
+  async saveResetCode(userId, code, expiresAt) {
+    await User.findByIdAndUpdate(
+      userId,
+      { resetCode: code, resetCodeExpiresAt: expiresAt },
+      { new: true }
+    );
+  }
 
-			if (expiresAt > new Date()) {
-				return { code: user.resetCode, expiresAt };
-			}
-		}
+  async getResetCode(userId) {
+    const user = await User.findById(userId).select('resetCode resetCodeExpiresAt');
+    if (user && user.resetCode && user.resetCodeExpiresAt) {
+      const expiresAt = new Date(user.resetCodeExpiresAt);
 
-		return null;
-	}
+      if (expiresAt > new Date()) {
+        return { code: user.resetCode, expiresAt };
+      }
+    }
 
-	async updatePassword(userId, hashedPassword) {
-		await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-	}
+    return null;
+  }
 
-	async clearResetCode(userId) {
-		await User.findByIdAndUpdate(userId, { $unset: { resetCode: "", resetCodeExpiresAt: "" } });
-	}
+  async updatePassword(userId, hashedPassword) {
+    await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+  }
+
+  async clearResetCode(userId) {
+    await User.findByIdAndUpdate(userId, {
+      $unset: { resetCode: '', resetCodeExpiresAt: '' },
+    });
+  }
 }
