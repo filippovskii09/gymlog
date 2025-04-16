@@ -34,4 +34,3 @@ jobs:
         run: |
           cd frontend
           npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
-					
