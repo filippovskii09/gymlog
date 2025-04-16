@@ -31,7 +31,9 @@ const authApi = api.injectEndpoints({
             accessToken: string;
           };
           dispatch(setAccessToken(accessToken));
-        } catch {}
+        } catch (error) {
+          console.error(error);
+        }
       },
     }),
     userLogout: builder.mutation<GenericMessageResponse, LogoutDto>({

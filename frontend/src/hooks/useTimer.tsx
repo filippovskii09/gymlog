@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from '@/store/store';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const useFallbackTimer = (initialMinutes: number = 5) => {
+const useFallbackTimer = () => {
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const { minutes, seconds } = useSelector((state: RootState) => state.fallbackTimer);
@@ -29,11 +29,11 @@ const useFallbackTimer = (initialMinutes: number = 5) => {
       clearInterval(timerInterval);
     }
     return () => clearInterval(timerInterval);
-  }, [seconds, minutes]);
+  }, [seconds, minutes, dispatch]);
 
   useEffect(() => {
     dispatch(startTimer());
-  }, []);
+  }, [dispatch]);
 
   return {
     minutes,

@@ -15,7 +15,6 @@ const NewPasswordForm: FC = () => {
   const [trigger, { isLoading, isSuccess, isError, error }] = useUserNewPasswordMutation();
 
   const resetToken = getResetToken();
-  if (!resetToken) return null;
 
   const { register, handleSubmit, errors, isSubmitting, buttonText, submitError } =
     useAuthFormHandler<NewPasswordDto, GenericMessageResponse>({
@@ -23,6 +22,7 @@ const NewPasswordForm: FC = () => {
       mutation: () => {
         return [
           async (data: NewPasswordDto) => {
+            if (!resetToken) throw new Error('Reset token not found');
             const result = await trigger({ ...data, resetToken }).unwrap();
             return result;
           },
@@ -31,7 +31,6 @@ const NewPasswordForm: FC = () => {
       },
       defaultButtonText: BUTTON_TEXTS.AUTH.RESET_PASSWORD,
       onSuccessNavigate: ROUTES.AUTH.LOGIN,
-      isNewPassword: true,
     });
 
   return (

@@ -14,12 +14,12 @@ const ResendOtpCodeButton = () => {
     try {
       await userForgotPassword({ email }).unwrap();
     } catch (error) {
-      console.error('Error resending OTP code:', error);
+      console.log('Error resending OTP code:', error);
     }
   };
 
   return (
-    <button type="button" onClick={(e) => handleSubmit(e)} disabled={isLoading} className="">
+    <button type="button" onClick={(e) => handleSubmit(e)} disabled={isLoading}>
       {isSuccess ? 'Code sended' : 'Resend Code'}
     </button>
   );

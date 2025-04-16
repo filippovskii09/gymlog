@@ -22,16 +22,10 @@ const VerifyCodeForm: FC = () => {
   const [trigger, { isLoading, isSuccess, isError, error }] = useUserVerifyCodeMutation();
   const email = useSelector((state: RootState) => state.auth.email) as string;
   const { isTimeout } = useFallbackTimer();
-  const {
-    register,
-    handleSubmit,
-    errors,
-    isSubmitting,
-    buttonText,
-    submitError,
-    mutationError,
-    setValue,
-  } = useAuthFormHandler<VerifyCodeFormValues, VerifyCodeResponse>({
+  const { handleSubmit, isSubmitting, buttonText, mutationError, setValue } = useAuthFormHandler<
+    VerifyCodeFormValues,
+    VerifyCodeResponse
+  >({
     schema: verifyCodeSchema,
     mutation: () => {
       return [

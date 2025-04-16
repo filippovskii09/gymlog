@@ -12,13 +12,12 @@ type UseAuthFormHandlerProps<TFormData extends Record<string, unknown>, TRespons
   schema: ObjectSchema<TFormData>;
   mutation: () => readonly [
     (data: TFormData) => Promise<TResponse>,
-    { isLoading: boolean; isSuccess: boolean; isError: boolean; error: any },
+    { isLoading: boolean; isSuccess: boolean; isError: boolean; error: unknown },
   ];
   defaultButtonText: string;
   onSuccessNavigate?: string | ((data: TResponse) => string);
   isLogin?: boolean;
   isForgotPassword?: boolean;
-  isNewPassword?: boolean;
   isVerifyCode?: boolean;
 };
 
@@ -29,7 +28,6 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
   onSuccessNavigate,
   isLogin,
   isForgotPassword,
-  isNewPassword,
   isVerifyCode,
 }: UseAuthFormHandlerProps<TFormData, TResponse>) => {
   const [mutate, { isLoading, isSuccess, isError, error }] = mutation();
@@ -92,11 +90,11 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
         }
       }
     }
-  }, [isSuccess, onSuccessNavigate, isVerifyCode]);
+  }, [isSuccess, onSuccessNavigate, isVerifyCode, router]);
 
   let mutationError: string | null = null;
 
-  if (error && 'status' in error) {
+  if (error && typeof error === 'object' && 'status' in error) {
     mutationError =
       ((error as FetchBaseQueryError).data as { message?: string })?.message || 'Server error';
   } else if (error instanceof Error) {
