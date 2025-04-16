@@ -3,10 +3,10 @@
 import { BUTTON_TEXTS, ROUTES } from '@/constants/constants';
 import { useUserNewPasswordMutation } from '@/features/api/resetPasswordApi';
 import { useAuthFormHandler } from '@/hooks/auth/useAuthFormHandler';
+import { useResetToken } from '@/hooks/useResetToken';
 import { userNewPasswordSchema } from '@/schemas/registerSchema';
 import { GenericMessageResponse } from '@/types/auth.intarface';
 import { NewPasswordDto } from '@/types/password-reset.interface';
-import { getResetToken } from '@/utils/getResetToken';
 import { FC, FormEvent } from 'react';
 import BasicButton from '../ui/BasicButton';
 import BasicInput from '../ui/BasicInput';
@@ -14,7 +14,7 @@ import BasicInput from '../ui/BasicInput';
 const NewPasswordForm: FC = () => {
   const [trigger, { isLoading, isSuccess, isError, error }] = useUserNewPasswordMutation();
 
-  const resetToken = getResetToken();
+  const resetToken = useResetToken();
 
   const { register, handleSubmit, errors, isSubmitting, buttonText, submitError } =
     useAuthFormHandler<NewPasswordDto, GenericMessageResponse>({

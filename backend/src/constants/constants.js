@@ -1,4 +1,8 @@
-export const CORS_WHITE_LIST = ['http://192.168.1.101:3000', 'http://localhost:3000', 'https://gymlog-phi.vercel.app'];
+export const CORS_WHITE_LIST = [
+  'http://192.168.1.101:3000',
+  'http://localhost:3000',
+  'https://gymlog-phi.vercel.app',
+];
 
 export const EMAIL_CONTENT = (resetCode) => `
 <div style="font-family: 'Arial', sans-serif; background-color: #f4f7fc; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto;">
