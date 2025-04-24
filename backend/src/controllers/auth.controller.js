@@ -23,7 +23,7 @@ export class AuthController {
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: 'strict',
       });
 
       res.status(200).json({ accessToken, user });
