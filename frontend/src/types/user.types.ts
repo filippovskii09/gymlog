@@ -1,4 +1,4 @@
-import { USER_CONSTANTS } from '@shared/constants/user';
+import { USER_CONSTANTS } from '../../../shared/constants/user';
 
 export type Gender = (typeof USER_CONSTANTS.GENDERS)[number];
 export type FitnessLevel = (typeof USER_CONSTANTS.FITNESS_LEVELS)[number];
