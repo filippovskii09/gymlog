@@ -9,7 +9,6 @@ import routes from './routes/index.js';
 import { setupSwagger } from './swagger/swagger.js';
 
 const app = express();
-app.set('trust proxy', 1);
 
 app.use(
   cors({
