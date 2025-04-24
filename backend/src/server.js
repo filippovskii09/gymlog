@@ -7,7 +7,9 @@ import { connectDB } from './config/db.js';
 import { CORS_WHITE_LIST } from './constants/constants.js';
 import routes from './routes/index.js';
 import { setupSwagger } from './swagger/swagger.js';
+
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(
   cors({
