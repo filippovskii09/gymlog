@@ -10,6 +10,8 @@ import {
 } from '@/types/user.types';
 import { createSlice } from '@reduxjs/toolkit';
 
+type TrainingInfoValue<K extends keyof TrainingInfoState> = TrainingInfoState[K];
+
 interface TrainingInfoState {
   goal: Goals;
   additionalGoal: AdditionalGoals;
@@ -36,14 +38,17 @@ const trainingInfoSlice = createSlice({
   name: 'trainingInfo',
   initialState,
   reducers: {
-    setTrainingInfoItem: (
-      state,
-      action: { payload: { key: keyof TrainingInfoState; value: string } }
+    setTrainingInfoItem: <K extends keyof TrainingInfoState>(
+      state: TrainingInfoState,
+      action: {
+        payload: {
+          key: K;
+          value: TrainingInfoValue<K>;
+        };
+      }
     ) => {
       const { key, value } = action.payload;
-      if (key in state) {
-        (state as TrainingInfoState)[key] = value;
-      }
+      state[key] = value;
     },
   },
 });
