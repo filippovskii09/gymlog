@@ -8,6 +8,7 @@ type Props = {
   type?: 'submit' | 'button';
   redirectPath?: string;
   className?: string;
+  onClick?: () => void;
 };
 
 const BasicButton: FC<Props> = ({
@@ -16,12 +17,13 @@ const BasicButton: FC<Props> = ({
   type = 'button',
   redirectPath,
   className,
+  onClick,
 }) => {
   return redirectPath ? (
     <Link
       href={redirectPath}
       className={cn(
-        'bg-grey group relative mx-auto flex h-11 w-full min-w-48 max-w-[300px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full border border-white p-2.5 text-center text-lg font-bold transition-all duration-200 hover:opacity-100 lg:opacity-70',
+        'bg-grey group min-h-10 relative mx-auto flex h-11 w-full min-w-48 max-w-[300px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full border border-white p-2.5 text-center text-lg font-bold transition-all duration-200 hover:opacity-100 lg:opacity-70',
         disabled && 'pointer-events-none opacity-50',
         className
       )}
@@ -32,8 +34,9 @@ const BasicButton: FC<Props> = ({
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
       className={cn(
-        'bg-grey group relative mx-auto flex h-11 w-full min-w-48 max-w-[300px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full border border-white p-2.5 text-center text-lg font-bold transition-all duration-200 hover:opacity-100 lg:opacity-70',
+        'bg-grey group min-h-10 relative mx-auto flex h-11 w-full min-w-48 max-w-[300px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full border border-white p-2.5 text-center text-lg font-bold transition-all duration-200 hover:opacity-100 lg:opacity-70',
         disabled && 'pointer-events-none opacity-50',
         className
       )}

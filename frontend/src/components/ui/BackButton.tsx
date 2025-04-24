@@ -9,7 +9,7 @@ const BackButton: FC<ChildrenProps> = ({ children }) => {
   const router = useRouter();
 
   return (
-    <button className={'flex items-center gap-2 p-5 hover:scale-125'} onClick={() => router.back()}>
+    <button className={'flex items-center gap-2 p-5'} onClick={() => router.back()}>
       <BackArrowIcon />
       {children}
     </button>

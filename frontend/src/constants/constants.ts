@@ -23,13 +23,15 @@ export const ROUTES = Object.freeze({
     ENTER_NEW_PASS: '/new-password',
   },
   HOME: '/',
-  USER_SETUP: {
-    GENDER: '/gender',
-    INDEX: '/setup',
+  SURVEY: {
+    INDEX: '/survey',
+    GENERAL: {
+      GENDER: '/gender',
+      WEIGHT: '/weight',
+      HEIGHT: '/height',
+      AGE: '/age',
+    },
     GOAL: '/goal',
-    WEIGHT: '/weight',
-    HEIGHT: '/height',
-    AGE: '/age',
     ACTIVITY: '/activity',
   },
 });
@@ -59,8 +61,4 @@ export const TAGS = Object.freeze({
 export const TAG_TYPES = Object.values(TAGS);
 
 export const BASE_URL = 'https://gymlog-yho1.onrender.com/api';
-
-export const GENDERS = Object.freeze({
-  MALE: 'Male',
-  FEMALE: 'Female',
-});
+// export const BASE_URL = 'http://localhost:3001/api';

@@ -4,6 +4,7 @@ import {
   persistedFallbackTimer,
   persistedUserReducer,
 } from '@/features/persist';
+import survayReducer from '@/features/slices/survey';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -14,6 +15,7 @@ export const store = configureStore({
     auth: persistedAuthInfo,
     user: persistedUserReducer,
     fallbackTimer: persistedFallbackTimer,
+    survey: survayReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

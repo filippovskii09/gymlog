@@ -1,13 +1,5 @@
 import { ReactNode } from 'react';
 
-export type Gender = 'Male' | 'Female';
-
-export interface GenderCheckboxProps {
-  gender: Gender;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-}
-
 export interface GenderIconProps {
   checked: boolean;
 }

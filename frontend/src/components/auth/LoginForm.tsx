@@ -26,7 +26,7 @@ const LoginForm: FC = () => {
         ] as const;
       },
       defaultButtonText: BUTTON_TEXTS.AUTH.LOG_IN,
-      onSuccessNavigate: ROUTES.USER_SETUP.INDEX,
+      onSuccessNavigate: ROUTES.SURVEY.INDEX,
       isLogin: true,
     });
 

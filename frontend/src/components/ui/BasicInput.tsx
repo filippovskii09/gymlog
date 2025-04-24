@@ -1,3 +1,5 @@
+'use client';
+
 import classNames from 'classnames';
 import {
   ChangeEvent,
@@ -19,6 +21,7 @@ type InputProps = {
   maxLength?: number;
   wrapperClassName?: string;
   inputClassName?: string;
+  labelClassName?: string;
   onPaste?: (e: ClipboardEvent<HTMLInputElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
@@ -26,7 +29,17 @@ type InputProps = {
 
 const BasicInput = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, error, wrapperClassName, inputClassName, value, onChange, type = 'text', ...rest },
+    {
+      label,
+      error,
+      wrapperClassName,
+      inputClassName,
+      labelClassName,
+      value,
+      onChange,
+      type = 'text',
+      ...rest
+    },
     ref
   ) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +47,7 @@ const BasicInput = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={`relative w-full text-[16px] font-medium ${wrapperClassName}`}>
-        {label && <InputLabel name={rest?.name} label={label} />}
+        {label && <InputLabel className={labelClassName} name={rest?.name} label={label} />}
 
         <div className={'relative'}>
           <input

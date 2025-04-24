@@ -2,7 +2,7 @@ import { User } from '../models/User.model.js';
 
 export class UserRepository {
   async findByEmail(email) {
-    return User.findOne({ email });
+    return User.findOne({ email }).select('+password');
   }
 
   async findById(userId) {
@@ -36,6 +36,25 @@ export class UserRepository {
     }
 
     return null;
+  }
+
+  async updateUserFieldsById(userId, fields) {
+    const allowedFields = Object.keys(User.schema.obj);
+    const update = {};
+
+    for (const key of Object.keys(fields)) {
+      if (allowedFields.includes(key)) {
+        update[key] = fields[key];
+      } else {
+        console.warn(`[UserRepository] Ignored unknown field: ${key}`);
+      }
+    }
+
+    if (!Object.keys(update).length) {
+      throw new Error('No valid fields provided for update');
+    }
+
+    await User.findByIdAndUpdate(userId, { $set: update }, { new: true });
   }
 
   async updatePassword(userId, hashedPassword) {

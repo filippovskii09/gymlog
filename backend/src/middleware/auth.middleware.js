@@ -2,7 +2,7 @@ import { config } from '../config/config.js';
 
 export const authenticate = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
-
+  console.log('Auth header:', req.header('Authorization'));
   if (!token) {
     return res.status(401).json({ error: 'Доступ заборонено!' });
   }

@@ -57,7 +57,7 @@ export const useAuthFormHandler = <TFormData extends Record<string, unknown>, TR
       const response = await mutate(formData);
 
       if (isLogin) {
-        setLoginUser({ user: response });
+        setLoginUser(response as { user: unknown; accessToken: string });
       }
 
       if (isForgotPassword) {

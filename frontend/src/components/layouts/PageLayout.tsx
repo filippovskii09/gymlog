@@ -9,7 +9,7 @@ interface PageLayoutProps {
 
 const PageLayout: FC<PageLayoutProps> = ({ children, className }) => {
   return (
-    <div className={cn('flex h-screen flex-col pt-10', className)}>
+    <div className={cn('flex h-screen flex-col py-10 max-w-xl mx-auto w-full', className)}>
       {children}
       <ToastContainer
         position="top-right"
