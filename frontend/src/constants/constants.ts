@@ -62,3 +62,8 @@ export const TAG_TYPES = Object.values(TAGS);
 
 export const BASE_URL = 'https://gymlog-yho1.onrender.com/api';
 // export const BASE_URL = 'http://localhost:3001/api';
+
+export const GENDERS = Object.freeze({
+  MALE: 'Male',
+  FEMALE: 'Female',
+});
